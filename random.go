@@ -1,18 +1,17 @@
-package util
+package utils
 
 import (
+	"bytes"
+	"encoding/binary"
+	"encoding/hex"
 	"fmt"
 	"math/rand"
 	"time"
-	"bytes"
-	"crypto/rand"
-	"encoding/binary"
-	"encoding/hex
 )
 
 func RandomNumber(min, max int) string {
 	rand.Seed(time.Now().UnixNano())
-	code := rand.Intn(max - min + 1) + min
+	code := rand.Intn(max-min+1) + min
 
 	return fmt.Sprintf("%d", code)
 }
