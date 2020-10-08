@@ -55,16 +55,63 @@ func ToInt(in interface{}) (iVal int, err error) {
 	return
 }
 
-func Uint(in interface{}) (uint64, error) {
+func Uint(in interface{}) (uint, error) {
 	return ToUint(in)
 }
 
-func MustUint(in interface{}) uint64 {
+func MustUint(in interface{}) uint {
 	val, _ := ToUint(in)
 	return val
 }
 
-func ToUint(in interface{}) (u64 uint64, err error) {
+func ToUint(in interface{}) (u uint, err error) {
+	switch tVal := in.(type) {
+	case nil:
+		u = 0
+	case int:
+		u = uint(tVal)
+	case int8:
+		u = uint(tVal)
+	case int16:
+		u = uint(tVal)
+	case int32:
+		u = uint(tVal)
+	case int64:
+		u = uint(tVal)
+	case uint:
+		u = tVal
+	case uint8:
+		u = uint(tVal)
+	case uint16:
+		u = uint(tVal)
+	case uint32:
+		u = uint(tVal)
+	case uint64:
+		u = uint(tVal)
+	case float32:
+		u = uint(tVal)
+	case float64:
+		u = uint(tVal)
+	case string:
+		var u64 uint64
+		u64, err = strconv.ParseUint(strings.TrimSpace(tVal), 10, 0)
+		u = uint(u64)
+	default:
+		err = ErrConvertFail
+	}
+	return
+}
+
+func Uint64(in interface{}) (uint64, error) {
+	return ToUint64(in)
+}
+
+func MustUint64(in interface{}) uint64 {
+	val, _ := ToUint64(in)
+	return val
+}
+
+func ToUint64(in interface{}) (u64 uint64, err error) {
 	switch tVal := in.(type) {
 	case nil:
 		u64 = 0
@@ -145,11 +192,11 @@ func ToInt64(in interface{}) (i64 int64, err error) {
 	return
 }
 
-func Float(in interface{}) (float64, error) {
-	return ToFloat(in)
+func Float64(in interface{}) (float64, error) {
+	return ToFloat64(in)
 }
 
-func ToFloat(in interface{}) (f64 float64, err error) {
+func ToFloat64(in interface{}) (f64 float64, err error) {
 	switch tVal := in.(type) {
 	case nil:
 		f64 = 0
@@ -185,7 +232,7 @@ func ToFloat(in interface{}) (f64 float64, err error) {
 	return
 }
 
-func MustFloat(in interface{}) float64 {
-	val, _ := ToFloat(in)
+func MustFloat64(in interface{}) float64 {
+	val, _ := ToFloat64(in)
 	return val
 }
