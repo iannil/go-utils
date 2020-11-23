@@ -1,4 +1,4 @@
-module github.com/iannil/utils
+module github.com/iannil/go-utils
 
 go 1.15
 
